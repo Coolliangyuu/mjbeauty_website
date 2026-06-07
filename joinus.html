@@ -168,7 +168,7 @@
             border-radius: 14px;
             border: 1px solid rgba(243, 207, 122, 0.1);
             margin-bottom: 15px;
-            cursor: pointer; /* 鼠标放上去变成小手 */
+            cursor: pointer; 
             transition: all 0.3s ease;
         }
 
@@ -256,6 +256,68 @@
             .copy-hint { font-size: 0.7rem; padding: 3px 8px; }
             .red-link-btn { width: 100%; padding: 12px 20px; border-radius: 16px; }
         }
+
+        /* =========================================
+           🎵 音乐播放器内置向下延展提示框 (加入我们专属版)
+           ========================================= */
+        #mj-joinus-prompt-panel {
+            display: none; 
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            padding-top: 15px;
+            text-align: center;
+            animation: slideDownIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #mj-joinus-prompt-panel.show {
+            display: block;
+        }
+        .mj-prompt-text {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .mj-prompt-text strong {
+            color: var(--mj-gold); 
+            font-weight: normal;
+            font-size: 0.95rem;
+        }
+        .mj-prompt-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .mj-prompt-btn {
+            background: rgba(243, 207, 122, 0.15);
+            border: 1px solid var(--mj-gold);
+            color: var(--mj-gold);
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            outline: none;
+        }
+        .mj-prompt-btn:hover {
+            background: var(--mj-gold);
+            color: #000;
+            box-shadow: 0 0 15px rgba(243, 207, 122, 0.3);
+        }
+        .mj-prompt-btn.cancel {
+            background: transparent;
+            border-color: rgba(255,255,255,0.2);
+            color: #aaa;
+        }
+        .mj-prompt-btn.cancel:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        @keyframes slideDownIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -325,19 +387,15 @@
         // 核心功能：一键复制账号到剪贴板
         // ==========================================
         function copyAccount(element) {
-            // 自动从当前点击的框里提取 .account-id 里的文字
             const textToCopy = element.querySelector('.account-id').innerText;
             const hintElement = element.querySelector('.copy-hint');
 
-            // 写入系统剪贴板
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // 成功后的丝滑反馈动画
                 hintElement.innerHTML = '✅ 复制成功';
-                hintElement.style.color = '#78f39c'; // 变成微信绿
+                hintElement.style.color = '#78f39c'; 
                 hintElement.style.background = 'rgba(120, 243, 156, 0.15)';
                 hintElement.style.borderColor = '#78f39c';
 
-                // 2秒后恢复原状
                 setTimeout(() => {
                     hintElement.innerHTML = '点击复制';
                     hintElement.style.color = '';
@@ -349,6 +407,103 @@
                 alert('复制失败，请手动长按复制哦');
             });
         }
+
+        // ==========================================
+        // 🎵 智能捕获并向下延展播放器面板 (加入我们专属版)
+        // ==========================================
+        (function() {
+            // 如果用户已经点过，就不再打扰（开发测试阶段可先注释掉下面这行）
+            // if (sessionStorage.getItem('mj_joinus_handled')) return;
+
+            // 1. 【防翻倍防线】清理可能残留的旧面板
+            const existingPanel = document.getElementById('mj-joinus-prompt-panel');
+            if (existingPanel) {
+                existingPanel.remove();
+            }
+
+            // 2. 轮询等待全局播放器组件渲染就位
+            const checkPlayerInterval = setInterval(() => {
+                const playerBody = document.querySelector('.mj-player-body');
+                if (playerBody) {
+                    clearInterval(checkPlayerInterval);
+                    if (!document.getElementById('mj-joinus-prompt-panel')) {
+                        injectJoinusPrompt(playerBody); 
+                    }
+                }
+            }, 200);
+
+            function injectJoinusPrompt(playerBody) {
+                const promptPanel = document.createElement('div');
+                promptPanel.id = 'mj-joinus-prompt-panel';
+                promptPanel.innerHTML = `
+                    <div class="mj-prompt-text">
+                        <strong>✨ 欢迎来到𝐌𝐉全球华人之家</strong><br>
+                        让我们一起随着<br>
+                        <strong>✨ Rock With You</strong><br>
+                        这首经典节奏，翩翩起舞吧！快来快来！
+                    </div>
+                    <div class="mj-prompt-btns">
+                        <button class="mj-prompt-btn" onclick="acceptJoinusMusic()">随乐起舞</button>
+                        <button class="mj-prompt-btn cancel" onclick="closeJoinusMusic()">稍后再说</button>
+                    </div>
+                `;
+                
+                // 塞入播放器内部
+                const resizer = document.getElementById('mj-resizer');
+                if(resizer) {
+                    playerBody.insertBefore(promptPanel, resizer);
+                } else {
+                    playerBody.appendChild(promptPanel);
+                }
+
+                // 延迟 0.5 秒滑出
+                setTimeout(() => {
+                    const playerDiv = document.getElementById('mj-music-player');
+                    if(playerDiv && playerDiv.classList.contains('minimized')) {
+                        playerDiv.classList.remove('minimized');
+                        const minBtn = document.getElementById('mj-minimize-btn');
+                        if (minBtn) minBtn.innerText = "_";
+                    }
+                    promptPanel.classList.add('show');
+                }, 500);
+
+                // 🚀 【DOM 特征主动防御自毁守护进程】
+                const pjaxGuardInterval = setInterval(() => {
+                    if (!document.querySelector('.join-container')) {
+                        clearInterval(pjaxGuardInterval);
+                        promptPanel.remove(); 
+                        console.log("🧹 守卫：检测到离开加入我们页，已精准完成自毁清理");
+                    }
+                }, 300);
+            }
+
+            // 选项1：立即播放
+            window.acceptJoinusMusic = function() {
+                const playlistItems = document.querySelectorAll('.mj-playlist-item');
+                let targetFound = false;
+                for(let item of playlistItems) {
+                    if(item.innerText.toLowerCase().includes("rock with you")) {
+                        item.click(); 
+                        targetFound = true;
+                        break;
+                    }
+                }
+                if(!targetFound) {
+                    const playBtn = document.getElementById('mj-play-btn');
+                    if(playBtn) playBtn.click();
+                }
+                closeJoinusMusic();
+            };
+
+            // 选项2：关闭
+            window.closeJoinusMusic = function() {
+                const promptPanel = document.getElementById('mj-joinus-prompt-panel');
+                if (promptPanel) {
+                    promptPanel.remove();
+                }
+                sessionStorage.setItem('mj_joinus_handled', 'true');
+            };
+        })();
     </script>
 </div>
 
