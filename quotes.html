@@ -22,12 +22,11 @@
            自定义留言字体载入
            ================================== */
         @font-face {
-            font-family: 'MyMessageFont'; /* 给你的字体起个代号 */
-            /* 下面这行，把你自己的字体直链替换进去 */
+            font-family: 'MyMessageFont'; 
             src: url('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/LXGWWenKai-Regular.ttf'); 
             font-weight: normal;
             font-style: normal;
-            font-display: swap; /* 优化加载体验：字体没加载出来前先显示默认字体 */
+            font-display: swap; 
         }
 
         :root {
@@ -156,13 +155,13 @@
 
         /* === 留言内容样式（已适配自定义字体） === */
         .content {
-            font-family: 'MyMessageFont', "Microsoft YaHei", sans-serif; /* 优先使用你载入的字体 */
-            font-size: 1.1rem; /* 手写/文艺字体稍微放大一点更清晰 */
-            line-height: 1.8; /* 增加行距提升阅读体验 */
+            font-family: 'MyMessageFont', "Microsoft YaHei", sans-serif; 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
             margin-bottom: 20px;
             color: #e0e0e0;
             white-space: pre-wrap;
-            letter-spacing: 1px; /* 加一点字间距更有味道 */
+            letter-spacing: 1px; 
         }
 
         /* === 留言署名样式（已适配自定义字体） === */
@@ -185,12 +184,12 @@
             right: 40px;
             display: flex;
             align-items: center;
-            gap: 15px; /* 文字和小正方体的间距 */
-            background: rgba(243, 207, 122, 0.1); /* 较暗的半透明底色 */
-            backdrop-filter: blur(15px); /* 磨砂玻璃效果 */
-            border: 1px solid rgba(243, 207, 122, 0.3); /* 金色边框 */
-            border-radius: 16px; /* 大外框：带圆弧的长方体 */
-            padding: 8px 8px 8px 20px; /* 左侧留出文字空间，右侧紧贴小按钮 */
+            gap: 15px; 
+            background: rgba(243, 207, 122, 0.1); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(243, 207, 122, 0.3); 
+            border-radius: 16px; 
+            padding: 8px 8px 8px 20px; 
             text-decoration: none;
             z-index: 100;
             cursor: pointer;
@@ -220,7 +219,7 @@
             height: 42px;
             background: rgba(243, 207, 122, 0.25);
             border: 1px solid rgba(243, 207, 122, 0.5);
-            border-radius: 10px; /* 内部小正方体的圆润边角 */
+            border-radius: 10px; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -276,7 +275,7 @@
                 bottom: 25px;
                 right: 20px;
                 padding: 6px 6px 6px 15px;
-                border-radius: 14px; /* 手机端外框圆弧略微缩小 */
+                border-radius: 14px; 
                 gap: 10px;
             }
             .add-text {
@@ -287,7 +286,7 @@
                 width: 36px;
                 height: 36px;
                 font-size: 1.5rem;
-                border-radius: 8px; /* 手机端小方块圆弧略微缩小 */
+                border-radius: 8px; 
             }
             /* 修复加了 pjax-container 后的排版问题 */
             #pjax-container {
@@ -303,6 +302,67 @@
         }
 
         #loading { text-align: center; color: var(--mj-gold); padding: 50px; }
+        
+        /* =========================================
+           🎵 音乐播放器内置向下延展提示框 (心语墙专属版)
+           ========================================= */
+        #mj-quotes-prompt-panel {
+            display: none; 
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            padding-top: 15px;
+            text-align: center;
+            animation: slideDownIn 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #mj-quotes-prompt-panel.show {
+            display: block;
+        }
+        .mj-prompt-text {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .mj-prompt-text strong {
+            color: var(--mj-gold); /* 适配心语墙的主题金 */
+            font-weight: normal;
+        }
+        .mj-prompt-btns {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .mj-prompt-btn {
+            background: rgba(243, 207, 122, 0.15);
+            border: 1px solid var(--mj-gold);
+            color: var(--mj-gold);
+            padding: 8px 15px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            outline: none;
+        }
+        .mj-prompt-btn:hover {
+            background: var(--mj-gold);
+            color: #000;
+            box-shadow: 0 0 15px rgba(243, 207, 122, 0.3);
+        }
+        .mj-prompt-btn.cancel {
+            background: transparent;
+            border-color: rgba(255,255,255,0.2);
+            color: #aaa;
+        }
+        .mj-prompt-btn.cancel:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        @keyframes slideDownIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -340,7 +400,7 @@
                 const board = document.getElementById('messageBoard');
                 const loading = document.getElementById('loading');
                 
-                if (!board || !loading) return; // 安全校验
+                if (!board || !loading) return; 
 
                 try {
                     const response = await fetch(TXT_URL);
@@ -383,6 +443,109 @@
             }
 
             fetchAndParse();
+        })();
+
+        // ==========================================
+        // 🎵 智能捕获并向下延展播放器面板 (心语墙专属推荐版)
+        // ==========================================
+        (function() {
+            // 如果用户已经点过，就不再打扰（开发测试阶段可先注释掉下面这行）
+            // if (sessionStorage.getItem('mj_quotes_handled')) return;
+
+            // 1. 【防翻倍第一道防线】每次加载脚本，第一件事就是无情斩杀可能存在的旧面板
+            const existingPanel = document.getElementById('mj-quotes-prompt-panel');
+            if (existingPanel) {
+                existingPanel.remove();
+            }
+
+            // 2. 轮询等待全局播放器组件渲染就位
+            const checkPlayerInterval = setInterval(() => {
+                const playerBody = document.querySelector('.mj-player-body');
+                if (playerBody) {
+                    clearInterval(checkPlayerInterval);
+                    
+                    // 【防翻倍第二道防线】双保险拦截
+                    if (!document.getElementById('mj-quotes-prompt-panel')) {
+                        injectQuotesPrompt(playerBody); 
+                    }
+                }
+            }, 200);
+
+            function injectQuotesPrompt(playerBody) {
+                // 创建心语墙专属的选项卡面板
+                const promptPanel = document.createElement('div');
+                promptPanel.id = 'mj-quotes-prompt-panel';
+                promptPanel.innerHTML = `
+                    <div class="mj-prompt-text">
+                        <strong>✨ 迈寇，你并不孤独。</strong><br>
+                        当思念化作漫天星光，一首<br>
+                        <strong>You Are Not Alone</strong><br>
+                        陪伴我们心中永远的米高·积逊
+                    </div>
+                    <div class="mj-prompt-btns">
+                        <button class="mj-prompt-btn" onclick="acceptQuotesMusic()">播放音乐</button>
+                        <button class="mj-prompt-btn cancel" onclick="closeQuotesMusic()">静静浏览</button>
+                    </div>
+                `;
+                
+                // 塞入播放器内部
+                const resizer = document.getElementById('mj-resizer');
+                if(resizer) {
+                    playerBody.insertBefore(promptPanel, resizer);
+                } else {
+                    playerBody.appendChild(promptPanel);
+                }
+
+                // 延迟 0.5 秒后，让它在播放器下方平滑地展开
+                setTimeout(() => {
+                    // 确保播放器没有被用户最小化
+                    const playerDiv = document.getElementById('mj-music-player');
+                    if(playerDiv && playerDiv.classList.contains('minimized')) {
+                        playerDiv.classList.remove('minimized');
+                        const minBtn = document.getElementById('mj-minimize-btn');
+                        if (minBtn) minBtn.innerText = "_";
+                    }
+                    promptPanel.classList.add('show');
+                }, 500);
+
+                // 🚀 【核心黑科技：DOM 特征主动防御自毁守护进程】
+                // 只要发现本页特有的 #messageBoard 消失了，说明用户绝对已经 PJAX 离页或返回了，立刻自毁！
+                const pjaxGuardInterval = setInterval(() => {
+                    if (!document.getElementById('messageBoard')) {
+                        clearInterval(pjaxGuardInterval);
+                        promptPanel.remove(); 
+                        console.log("🧹 守卫：检测到离开心语墙，已精准完成自毁清理");
+                    }
+                }, 300);
+            }
+
+            // 选项1：立即播放指定温柔歌曲
+            window.acceptQuotesMusic = function() {
+                const playlistItems = document.querySelectorAll('.mj-playlist-item');
+                let targetFound = false;
+                for(let item of playlistItems) {
+                    // 寻找指定的温柔催泪神曲
+                    if(item.innerText.toLowerCase().includes("you are not alone")) {
+                        item.click(); 
+                        targetFound = true;
+                        break;
+                    }
+                }
+                if(!targetFound) {
+                    const playBtn = document.getElementById('mj-play-btn');
+                    if(playBtn) playBtn.click();
+                }
+                closeQuotesMusic();
+            };
+
+            // 选项2：静静浏览 / 关闭
+            window.closeQuotesMusic = function() {
+                const promptPanel = document.getElementById('mj-quotes-prompt-panel');
+                if (promptPanel) {
+                    promptPanel.remove();
+                }
+                sessionStorage.setItem('mj_quotes_handled', 'true');
+            };
         })();
     </script>
 </div>
