@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🌍𝐌𝐉全球华人之家🕊️">
+    <meta property="og:description" content="Love Lives Forever - 迈克尔·杰克逊精神家园">
+    <meta property="og:image" content="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+
+    <link rel="stylesheet" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-quotes_css.css">
+
+    <style>
+        :root {
+            --mj-gold: #f3cf7a;
+            --mj-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background-color: #090a0f; }
+
+        body {
+            background-color: #090a0f;
+            background-image: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: var(--mj-white);
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* =========================================
+           完美修复：精美圆角胶囊型“加入我们”悬浮按钮
+           ========================================= */
+        .top-join-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            
+            color: var(--mj-white); 
+            font-size: 0.85rem;
+            text-decoration: none;
+            letter-spacing: 2px;
+            
+            /* 核心修改：恢复最初精致轻盈的大小 */
+            padding: 9px 18px; 
+            
+            /* 高级黑科技：通过双层渐变剪切，完美实现【圆角】与【渐变金边】并存 */
+            border: 2px solid transparent;
+            background: linear-gradient(#090a0f, #090a0f) padding-box, 
+                        linear-gradient(135deg, var(--mj-gold) 0%, rgba(255,255,255,0.6) 50%, var(--mj-gold) 100%) border-box;
+            border-radius: 20px; /* 重新拥抱完美的圆形边框 */
+            
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+            
+            /* 梦幻氛围：倒计时同款金色呼吸光晕效果 */
+            box-shadow: 0 0 12px rgba(243, 207, 122, 0.2);
+            animation: goldBreathIdle 3s infinite ease-in-out;
+        }
+        
+        /* 加号按钮细节优化 */
+        .top-join-btn .plus-sign {
+            color: var(--mj-gold); 
+            font-weight: bold;
+            margin-right: 6px;
+            font-size: 1.05rem;
+            text-shadow: 0 0 8px var(--mj-gold);
+        }
+
+        /* 呼吸灯特效 */
+        @keyframes goldBreathIdle {
+            0%, 100% { box-shadow: 0 0 12px rgba(243, 207, 122, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(243, 207, 122, 0.5); }
+        }
+
+        /* 电影级擦拭流光特效 */
+        .top-join-btn::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 80px; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: skewX(-30deg);
+            transition: none;
+            border-radius: 20px; /* 约束流光不能折射到圆角外面去 */
+        }
+
+        /* 鼠标悬停激活终极视觉状态 */
+        .top-join-btn:hover {
+            color: #000; 
+            /* 悬停变成通体耀眼纯金，完美覆盖 */
+            background: var(--mj-gold) border-box; 
+            border-color: var(--mj-gold);
+            box-shadow: 0 10px 25px rgba(243, 207, 122, 0.6), 0 0 40px rgba(243, 207, 122, 0.4);
+            transform: translateY(-3px) scale(1.03); 
+        }
+        
+        .top-join-btn:hover .plus-sign {
+            color: #000; 
+            text-shadow: none;
+        }
+
+        /* 触发流光动画 */
+        .top-join-btn:hover::after {
+            left: 120%;
+            transition: all 0.7s ease;
+        }
+
+        /* 主体内容 */
+        .main-hero { position: relative; text-align: center; z-index: 10; width: 100%; }
+        .mj-icon { width: 150px; height: 150px; margin-top:25px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(243, 207, 122, 0.4)); }
+        h1 { font-size: 2.8rem; letter-spacing: 6px; margin-bottom: 10px; color: var(--mj-gold); font-weight: 300; text-shadow: 0 0 20px rgba(243, 207, 122, 0.3); }
+        .motto { font-size: 1rem; letter-spacing: 2px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; display: flex; justify-content: center; align-items: center; }
+        .nav-gate { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        .sub-gates { display: flex; gap: 30px; justify-content: center; }
+        .gate-button { text-decoration: none; color: var(--mj-white); width: 220px; padding: 25px 20px; background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .gate-button:hover { transform: translateY(-10px); border-color: var(--mj-gold); background: rgba(243, 207, 122, 0.05); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); }
+        .event-gate { width: 470px; background: rgba(243, 207, 122, 0.08); border: 1px solid rgba(243, 207, 122, 0.3); box-shadow: 0 0 20px rgba(243, 207, 122, 0.1); }
+        .event-gate .gate-title { color: var(--mj-gold); font-size: 1.5rem; }
+        .event-gate:hover { background: rgba(243, 207, 122, 0.15); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), 0 0 30px rgba(243, 207, 122, 0.2); }
+        .gate-title { display: block; font-size: 1.3rem; letter-spacing: 3px; margin-bottom: 8px; transition: color 0.3s ease; }
+        .gate-sub { display: block; font-size: 0.75rem; color: var(--mj-gold); opacity: 0.7; text-transform: uppercase; }
+        footer { position: absolute; bottom: 70px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.2); letter-spacing: 2px; text-align: center; width: 100%; z-index: 10; }
+
+        /* ==================================
+           手机端专项优化
+           ================================== */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; letter-spacing: 4px; }
+            .mj-icon { width: 100px; height: 100px; margin-bottom: 15px; }
+            .motto { font-size: 0.85rem; margin-bottom: 30px; flex-direction: column; gap: 5px; }
+            .motto-dot { display: none; } 
+            .nav-gate { gap: 15px; }
+            .sub-gates { flex-direction: column; gap: 15px; }
+            .gate-button, .event-gate { width: 240px; padding: 18px 15px; border-radius: 16px; }
+            .gate-title { font-size: 1.1rem; margin-bottom: 4px; }
+            .event-gate .gate-title { font-size: 1.25rem; } 
+            .gate-sub { font-size: 0.65rem; }
+            footer { bottom: 100px; font-size: 0.65rem; }
+
+            /* 手机端尺寸和圆角同步恢复原貌 */
+            .top-join-btn {
+                top: 20px; right: 20px;
+                font-size: 0.75rem; padding: 7px 14px;
+                border-radius: 20px; 
+            }
+            .top-join-btn .plus-sign { font-size: 0.9rem; margin-right: 4px; }
+            .top-join-btn::after { display: none; } /* 手机端由于触控特性，直接保留纯金Hover即可 */
+            }
+                    /* 修复加了 pjax-container 后的排版问题 */
+            #pjax-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+        /* 矮屏防叠放 */
+        @media (max-height: 800px) { body { height: auto; min-height: 100vh; justify-content: flex-start; padding: 40px 0 80px 0; overflow-y: auto; } footer { position: relative; bottom: 0; margin-top: 40px; } }
+    </style>
+</head>
+<body>
+<div id="pjax-container">
+    <a href="./joinus.html" class="top-join-btn">
+        <span class="plus-sign">+</span>加入我们
+    </a>
+
+    <div class="stars-container" id="starField"></div>
+
+    <main class="main-hero">
+        <img src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg" class="mj-icon" alt="MJ Icon">
+        
+        <h1>MJBEAUTY</h1>
+        
+        <div class="motto">
+            <span class="motto-line">🌍𝐌𝐉全球华人之家🕊️</span>
+            <span class="motto-dot"> &nbsp;·&nbsp; </span>
+            <span class="motto-line">🍿𝐌𝐉华人之家影档馆📷</span>
+        </div>
+
+        <nav class="nav-gate">
+            
+            <a href="./agiftformj/" class="gate-button event-gate">
+                <span class="gate-title">🎁 A GIFT FOR MICHAEL</span>
+                <span class="gate-sub">二〇二六 六·二五 特别企划</span>
+            </a>
+
+            <div class="sub-gates">
+                <a href="quotes.html" class="gate-button">
+                    <span class="gate-title">❤️心语墙❤️</span>
+                    <span class="gate-sub">Quotes Wall</span>
+                </a>
+
+                <a href="./pic/" class="gate-button">
+                    <span class="gate-title">影像档案馆</span>
+                    <span class="gate-sub">Cloud Gallery</span>
+                </a>
+            </div>
+
+        </nav>
+    </main>
+
+    <div id="mj-random-quote">华人之家载入中...</div>
+
+    <footer>
+        LOVE LIVES FOREVER | MJBEAUTY.TOP<br><a href="https://beian.miit.gov.cn/" style="text-decoration: none;color: rgba(255, 255, 255, 0.2);">京ICP备2021036783号-2</a>
+    </footer>
+
+    <script>
+        // 用匿名函数包裹，解决 PJAX 变量冲突
+        (function() {
+            const field = document.getElementById('starField');
+            if (!field) return;
+            
+            // 【关键修复】清空之前的星星，防止每次返回主页星星翻倍变卡
+            field.innerHTML = ''; 
+            
+            for (let i = 0; i < 120; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2 + 1 + 'px';
+                star.style.width = size;
+                star.style.height = size;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 5 + 's';
+                field.appendChild(star);
+            }
+        })();
+    </script>
+</div>
+
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-music.js"></script>
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-pjax.js"></script>
+
+</body>
+</html>

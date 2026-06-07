@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A GIFT FOR MICHAEL - 🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+    <style>
+        @font-face {
+            font-family: 'MJQuotesFont';
+            src: url('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/LXGWWenKai-Regular.ttf') format('truetype');
+            font-weight: normal; font-style: normal;
+        }
+        :root {
+            --bg-color-1: #090a0f; --bg-color-2: #14162b; --bg-color-3: #1a1224;
+            --gold-primary: #d4af37; --gold-glow: rgba(212, 175, 55, 0.4);
+            --text-main: #ffffff; --text-muted: #a0a0b0; 
+        }
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow-x: hidden; color: var(--text-main); background-color: transparent; 
+        }
+        .animated-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(120deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-1));
+            background-size: 300% 300%; animation: gradientMove 18s ease-in-out infinite; z-index: 0; 
+        }
+        .stardust {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='40' r='1.5' fill='%23d4af37' opacity='0.8'/%3E%3Ccircle cx='120' cy='200' r='1' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='250' cy='80' r='2' fill='%23d4af37' opacity='0.6'/%3E%3Ccircle cx='200' cy='280' r='1.5' fill='%23ffffff' opacity='0.8'/%3E%3Ccircle cx='80' cy='150' r='1' fill='%23d4af37' opacity='0.4'/%3E%3C/svg%3E");
+            z-index: 1; animation: stardustFloat 90s linear infinite; pointer-events: none; 
+        }
+        .stardust.layer2 {
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='300' r='1.5' fill='%23ffffff' opacity='0.6'/%3E%3Ccircle cx='320' cy='120' r='2' fill='%23d4af37' opacity='0.8'/%3E%3Ccircle cx='180' cy='50' r='1' fill='%23ffffff' opacity='0.4'/%3E%3C/svg%3E");
+            animation: stardustFloat 150s linear infinite reverse; opacity: 0.6; z-index: 2; pointer-events: none;
+        }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes stardustFloat { 0% { background-position: 0px 0px; } 100% { background-position: -600px -600px; } }
+        .curtain-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(20,22,43,0.9) 0%, #050505 80%);
+            z-index: 3; transition: opacity 1.5s ease, visibility 1.5s;
+        }
+        #quotesContainer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 4; overflow: hidden;
+        }
+        .floating-quote {
+            position: absolute; top: 0; max-width: 380px; text-align: center;
+            font-family: "MJQuotesFont", "Optima", "Georgia", "PingFang SC", serif;
+            font-style: normal; line-height: 1.6; 
+            transform: translate(-50%, 110vh); 
+            /* 增加一点文字阴影边缘的清晰度 */
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .cinematic-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent; display: flex; justify-content: center; align-items: center;
+            z-index: 100; transition: opacity 1.5s ease, visibility 1.5s; overflow: hidden;
+        }
+        .spotlight {
+            position: absolute; top: -10vh; left: 50%; transform: translateX(-50%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0.05) 40%, transparent 70%);
+            pointer-events: none; mix-blend-mode: screen; z-index: 101;
+        }
+        .intro-box {
+            text-align: center; display: flex; flex-direction: column; align-items: center; padding: 20px; z-index: 102; 
+        }
+        .gold-line {
+            width: 1px; height: 50px; background: linear-gradient(to bottom, transparent, var(--gold-primary), transparent); margin: 15px 0;
+        }
+        .kicker { color: var(--gold-primary); font-size: 1rem; letter-spacing: 0.5em; margin: 0 0 10px 0; margin-right: -0.5em; opacity: 0.9; font-weight: 300; }
+        .main-title { font-size: 3rem; letter-spacing: 0.1em; margin: 10px 0 20px 0; font-weight: 300; text-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
+        .timer-display { display: flex; gap: 20px; justify-content: center; margin: 25px 0 30px 0; }
+        .time-block {
+            display: flex; flex-direction: column; align-items: center;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.3); 
+            border-radius: 12px; padding: 15px 20px; min-width: 70px; 
+            backdrop-filter: blur(8px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
+        }
+        .time-block span { font-size: 3.5rem; font-weight: 300; color: var(--gold-primary); text-shadow: 0 0 25px var(--gold-glow); font-variant-numeric: tabular-nums; line-height: 1; }
+        .time-block label { font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; letter-spacing: 2px; }
+        .target-date-text { color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; margin: 10px 0; font-weight: 300; }
+        .elegant-btn {
+            background: transparent; border: 1px solid rgba(212, 175, 55, 0.4); color: var(--gold-primary);
+            padding: 14px 40px; font-size: 0.95rem; letter-spacing: 6px; text-indent: 6px;
+            cursor: pointer; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); outline: none; margin: 10px 0; border-radius: 4px;
+        }
+        .elegant-btn:hover { color: #000; border-color: var(--gold-primary); background-color: var(--gold-primary); box-shadow: 0 0 25px var(--gold-glow); }
+        .main-portal { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="animated-bg"></div>
+    <div class="stardust"></div>
+    <div class="stardust layer2"></div>
+    <div id="curtainBg" class="curtain-bg"></div>
+    <div id="quotesContainer"></div>
+
+    <div id="cinematicOverlay" class="cinematic-overlay">
+        <div class="spotlight"></div>
+        <div class="intro-box">
+            <h3 class="kicker">二〇二六特别企划</h3>
+            <h1 class="main-title">A GIFT FOR MICHAEL</h1>
+            
+            <div id="countdownState" style="transition: opacity 0.8s ease;">
+                <div class="timer-display">
+                    <div class="time-block"><span id="cd-days">30</span><label>天</label></div>
+                    <div class="time-block"><span id="cd-hours">00</span><label>时</label></div>
+                    <div class="time-block"><span id="cd-minutes">00</span><label>分</label></div>
+                    <div class="time-block"><span id="cd-seconds">00</span><label>秒</label></div>
+                </div>
+                <p class="target-date-text" id="targetDateDisplay">2026 SPECIAL PROJECT</p>
+            </div>
+
+            <div id="readyState" style="display: none; flex-direction: column; align-items: center; opacity: 0; transition: opacity 1.5s ease;">
+                <div class="gold-line"></div>
+                <button id="unveilBtn" class="elegant-btn">揭开帷幕</button>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const totalDurationMs = 14000;       
+            const normalSpeedDurationMs = 5000;  
+            const startDelayMs = 2000;           
+            const initialDays = 30;              
+            
+            const initialDiff = initialDays * 24 * 60 * 60 * 1000; 
+            const transitionDiff = normalSpeedDurationMs; 
+            const fastDurationMs = totalDurationMs - normalSpeedDurationMs; 
+            
+            let globalSpeedMultiplier = 1; 
+
+            /* ========================================================
+               模块 A：物理寄语引擎 (极密深海版)
+            ======================================================== */
+            let quotesList = [];
+            let activeQuotes = [];
+            let lastSpawnTime = 0;
+
+            async function initQuotesEngine() {
+                try {
+                    const res = await fetch('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-quotes.txt');
+                    const text = await res.text();
+                    quotesList = text.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+                } catch (e) { return; }
+                
+                if (quotesList.length > 0) {
+                    // 【改动 1】预填装暴增至 45 条，开场即满屏
+                    for(let i = 0; i < 45; i++) {
+                        spawnQuote(true); 
+                    }
+                    requestAnimationFrame(animateQuotes);
+                }
+            }
+
+            function spawnQuote(isInitial = false) {
+                const container = document.getElementById('quotesContainer');
+                const el = document.createElement('div');
+                el.className = 'floating-quote';
+                el.innerText = quotesList[Math.floor(Math.random() * quotesList.length)];
+                
+                // 更宽的横向分布，允许字稍微超出一点点边缘，显得更满
+                el.style.left = (Math.random() * 85 + 7.5) + '%'; 
+                
+                // 【改动 2】拉大字体大小差值，增加3D空间感 (0.7rem 到 1.2rem)
+                const sizeBase = Math.random();
+                el.style.fontSize = (sizeBase * 0.5 + 0.7) + 'rem';
+                
+                // 大字（近处）清晰且飘得稍快，小字（远处）透明且飘得稍慢
+                const opacity = (sizeBase * 0.6 + 0.25).toFixed(2);
+                el.style.color = `rgba(212, 175, 55, ${opacity})`;
+                
+                container.appendChild(el);
+                
+                const startY = isInitial ? (Math.random() * 110 - 10) : 110;
+
+                activeQuotes.push({
+                    el: el,
+                    y: startY, 
+                    // 速度与字体大小绑定：近大远小，近快远慢
+                    speed: (sizeBase * 0.08 + 0.1) 
+                });
+                
+                el.style.transform = `translate(-50%, ${startY}vh)`;
+            }
+
+            function animateQuotes(timestamp) {
+                if (!lastSpawnTime) lastSpawnTime = timestamp;
+                
+                // 【改动 3】基础生成间隔从 800ms 暴降至 250ms，密度翻了 3.2 倍！
+                // 在极速狂飙阶段 (6倍速)，大约每 40 毫秒就会喷出一条新留言，堪称文字瀑布
+                const currentInterval = 250 / globalSpeedMultiplier; 
+                
+                // 支持在一帧内生成多条（防止倍率过高时掉帧导致生成数量跟不上）
+                let timePassed = timestamp - lastSpawnTime;
+                while (timePassed > currentInterval) {
+                    spawnQuote();
+                    timePassed -= currentInterval;
+                    lastSpawnTime = timestamp - timePassed;
+                }
+
+                for (let i = activeQuotes.length - 1; i >= 0; i--) {
+                    let q = activeQuotes[i];
+                    q.y -= q.speed * globalSpeedMultiplier;
+                    q.el.style.transform = `translate(-50%, ${q.y}vh)`;
+                    
+                    if (q.y < -20) { 
+                        q.el.remove();
+                        activeQuotes.splice(i, 1);
+                    }
+                }
+                requestAnimationFrame(animateQuotes);
+            }
+            initQuotesEngine();
+
+
+            /* ========================================================
+               模块 B：倒计时与时间扭曲调度器
+            ======================================================== */
+            let startTime = null;
+
+            function renderTime(diff) {
+                if (diff < 0) diff = 0;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+
+                const displaySecs = (diff <= normalSpeedDurationMs && diff > 0) ? Math.ceil(diff / 1000) : s;
+
+                document.getElementById('cd-days').innerText = String(d).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(h).padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = String(m).padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = String(displaySecs).padStart(2, '0');
+            }
+
+            function mockCountdown(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+                let currentDiff = 0;
+
+                // 最高提至 6.5 倍速，配合超高密度的生成率，视觉冲击拉满
+                if (elapsed < 0) {
+                    globalSpeedMultiplier = 1;
+                } else if (elapsed < fastDurationMs - 1500) {
+                    let p = elapsed / (fastDurationMs - 1500);
+                    globalSpeedMultiplier = 1 + p * 5.5; 
+                } else if (elapsed < fastDurationMs) {
+                    let p = (elapsed - (fastDurationMs - 1500)) / 1500;
+                    globalSpeedMultiplier = 6.5 - p * 5.5;
+                } else {
+                    globalSpeedMultiplier = 1;
+                }
+
+                if (elapsed <= fastDurationMs) {
+                    let progress = elapsed / fastDurationMs;
+                    const easeProgress = Math.pow(progress, 5); 
+                    currentDiff = transitionDiff + (initialDiff - transitionDiff) * (1 - easeProgress);
+                    renderTime(currentDiff);
+                    requestAnimationFrame(mockCountdown);
+                } else if (elapsed <= totalDurationMs) {
+                    let timeInPhase2 = elapsed - fastDurationMs;
+                    currentDiff = transitionDiff - timeInPhase2;
+                    renderTime(currentDiff);
+                    requestAnimationFrame(mockCountdown);
+                } else {
+                    renderTime(0);
+                    const countdownState = document.getElementById('countdownState');
+                    const readyState = document.getElementById('readyState');
+                    
+                    countdownState.style.opacity = '0';
+                    setTimeout(() => {
+                        countdownState.style.display = 'none';
+                        readyState.style.display = 'flex';
+                        setTimeout(() => { readyState.style.opacity = '1'; }, 50);
+                    }, 800); 
+                }
+            }
+
+            renderTime(initialDiff); 
+            setTimeout(() => {
+                requestAnimationFrame(mockCountdown);
+            }, startDelayMs);
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>404 迷失星海 · 🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/IMG_1483.svg">
+
+    <style>
+        /* =========================================
+           1. 全局样式与主页色彩变量完全同步
+           ========================================= */
+        :root {
+            --mj-gold: #f3cf7a;
+            --mj-white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --text-muted: rgba(255, 255, 255, 0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background-color: #090a0f; }
+
+        body {
+            background-color: #090a0f;
+            background-image: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: var(--mj-white);
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* =========================================
+           2. 动态星空流星背景
+           ========================================= */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* =========================================
+           3. 404 专属排版与特效
+           ========================================= */
+        .error-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        /* 巨大的金色发光 404 */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 300;
+            letter-spacing: 10px;
+            color: var(--mj-gold);
+            line-height: 1;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(243, 207, 122, 0.4), 0 0 60px rgba(243, 207, 122, 0.2);
+            font-family: "Optima", "Georgia", serif; /* 用带点复古感的衬线体更显质感 */
+            animation: floatUpDown 4s ease-in-out infinite; /* 轻微上下浮动 */
+        }
+
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); text-shadow: 0 0 40px rgba(243, 207, 122, 0.6), 0 0 80px rgba(243, 207, 122, 0.3); }
+        }
+
+        .error-title {
+            font-size: 1.5rem;
+            letter-spacing: 6px;
+            color: var(--mj-white);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .error-desc {
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 45px;
+        }
+
+        /* 返回主页的高级发光按钮 */
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #000;
+            background: var(--mj-gold);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            padding: 14px 45px;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(243, 207, 122, 0.3);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .back-home-btn:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(243, 207, 122, 0.5), 0 0 30px rgba(243, 207, 122, 0.3);
+            background: #ffffff;
+            color: #000;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 2px;
+        }
+
+        /* =========================================
+           4. 手机端适配
+           ========================================= */
+        @media (max-width: 600px) {
+            .error-code { font-size: 6rem; letter-spacing: 5px; }
+            .error-title { font-size: 1.2rem; letter-spacing: 4px; }
+            .error-desc { font-size: 0.85rem; padding: 0 10px; margin-bottom: 35px; }
+            .back-home-btn { padding: 12px 35px; font-size: 0.9rem; }
+            footer { bottom: 30px; font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stars-container" id="starField"></div>
+
+    <main class="error-container">
+        <div class="error-code">404</div>
+        <h2 class="error-title">星海迷途</h2>
+        
+        <p class="error-desc">
+            您寻找的页面似乎已化作流星隐入深空<br>
+            不如跟随光影的指引，重返我们的精神家园
+        </p>
+
+        <a href="/" class="back-home-btn">返回主页</a>
+    </main>
+
+    <footer>
+        LOVE LIVES FOREVER | 🌍𝐌𝐉全球华人之家🕊️
+    </footer>
+
+    <script>
+        const field = document.getElementById('starField');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2 + 1 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            field.appendChild(star);
+        }
+    </script>
+</body>
+</html>

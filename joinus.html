@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>🌍𝐌𝐉全球华人之家🕊️ · 加入我们</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+
+    <style>
+        /* =========================================
+           1. 全局样式与梦幻色彩变量
+           ========================================= */
+        :root {
+            --bg-color-1: #090a0f; 
+            --bg-color-2: #14162b;
+            --bg-color-3: #1a1224;
+            --mj-gold: #f3cf7a;   
+            --gold-glow: rgba(243, 207, 122, 0.4);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5); 
+            --glass-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background-color: #090a0f; }
+
+        body {
+            background-color: #090a0f;
+            background-image: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: var(--text-main);
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           2. 动态星空流星背景
+           ========================================= */
+        .stars-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* =========================================
+           3. 核心内容卡片布局
+           ========================================= */
+        .join-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            padding: 6px 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            background: var(--glass-bg);
+        }
+        .back-home-btn:hover {
+            color: var(--mj-gold);
+            border-color: var(--mj-gold);
+            transform: translateY(-2px);
+        }
+
+        .join-title {
+            font-size: 2rem;
+            letter-spacing: 4px;
+            color: var(--mj-gold);
+            font-weight: 300;
+            text-shadow: 0 0 20px rgba(243, 207, 122, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .join-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .channel-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 35px 25px;
+            margin-bottom: 25px;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .channel-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(243, 207, 122, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(243, 207, 122, 0.05);
+        }
+
+        .channel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .channel-icon {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .channel-name {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        /* =========================================
+           4. 全新的一键复制账号块样式
+           ========================================= */
+        .account-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px 25px;
+            border-radius: 14px;
+            border: 1px solid rgba(243, 207, 122, 0.1);
+            margin-bottom: 15px;
+            cursor: pointer; /* 鼠标放上去变成小手 */
+            transition: all 0.3s ease;
+        }
+
+        /* 悬停时整体高亮 */
+        .account-box:hover {
+            background: rgba(243, 207, 122, 0.1);
+            border-color: rgba(243, 207, 122, 0.4);
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 账号本体文字 */
+        .account-id {
+            font-size: 1.4rem;
+            color: var(--mj-gold);
+            letter-spacing: 1px;
+            font-family: "Consolas", monospace, "PingFang SC";
+            text-shadow: 0 0 10px rgba(243, 207, 122, 0.2);
+        }
+
+        /* 复制引导小标签 */
+        .copy-hint {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+        }
+
+        /* 悬停时标签微微变亮 */
+        .account-box:hover .copy-hint {
+            color: var(--mj-gold);
+            background: rgba(243, 207, 122, 0.15);
+        }
+
+        .account-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        .red-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #000000;
+            background: var(--mj-gold);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            padding: 12px 35px;
+            border-radius: 50px;
+            font-weight: 500;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(243, 207, 122, 0.4);
+            transition: all 0.4s ease;
+        }
+
+        .red-link-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(243, 207, 122, 0.6), 0 0 30px rgba(243, 207, 122, 0.3);
+            background: #ffffff;
+            color: #000000;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.15);
+            letter-spacing: 2px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            .join-title { font-size: 1.5rem; letter-spacing: 2px; }
+            .join-subtitle { font-size: 0.8rem; margin-bottom: 30px; }
+            .channel-card { padding: 25px 20px; border-radius: 20px; }
+            .channel-name { font-size: 1.1rem; }
+            .account-box { padding: 10px 15px; }
+            .account-id { font-size: 1.2rem; }
+            .copy-hint { font-size: 0.7rem; padding: 3px 8px; }
+            .red-link-btn { width: 100%; padding: 12px 20px; border-radius: 16px; }
+        }
+    </style>
+</head>
+<body>
+<div id="pjax-container">
+    <div class="stars-container" id="starField"></div>
+
+    <div class="join-container">
+        
+        <a href="../" class="back-home-btn">← 返回主页</a>
+
+        <h1 class="join-title">🌍𝐌𝐉全球华人之家🕊️</h1>
+        <p class="join-subtitle">L O V E &nbsp; L I V E S &nbsp; F O R E V E R &nbsp; · &nbsp; 加 入 我 们</p>
+
+        <div class="channel-card">
+            <div class="channel-header">
+                <svg class="channel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM12.5 11a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="#78f39c"/><path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 3.5c-4.28 0-7.75 3.024-7.75 6.75 0 2.122 1.134 4.02 2.915 5.275l-.761 2.285 2.502-1.251c.94.282 1.946.441 2.994.441 1.012 0 1.983-.147 2.893-.414a6.711 6.711 0 0 1-.293-1.936c0-3.59 3.246-6.5 7.25-6.5.17 0 .338.006.505.017C21.036 5.485 16.425 3.5 10.75 3.5Z" fill="#78f39c"/><path d="M16.5 15.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM19.5 15.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" fill="#78f39c"/><path fill-rule="evenodd" clip-rule="evenodd" d="M18.25 11.5c-3.452 0-6.25 2.462-6.25 5.5 0 1.725.897 3.275 2.31 4.295l-.547 1.64 1.83-.915c.813.218 1.685.38 2.657.38 3.451 0 6.25-2.463 6.25-5.5s-2.799-5.5-6.25-5.5Z" fill="#78f39c"/></svg>
+                <h2 class="channel-name">群主微信联系方式</h2>
+            </div>
+            
+            <div class="account-box" onclick="copyAccount(this)">
+                <span class="account-id">AAAMHDE123</span>
+                <span class="copy-hint">点击复制</span>
+            </div>
+            
+            <p class="account-hint">添加群主微信请备注：【MJ迈迷加群】<br>审核通过后群主将亲手拉你进入🌍𝐌𝐉全球华人之家🕊️</p>
+        </div>
+
+        <div class="channel-card">
+            <div class="channel-header">
+                <svg class="channel-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4Z" fill="#ff4d4d" stroke="#ff4d4d" stroke-width="2" stroke-linejoin="round"/><path d="M12 8V16" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/><path d="M9 11H15" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/></svg>
+                <h2 class="channel-name">官方小红书</h2>
+            </div>
+            
+            <div class="account-box" onclick="copyAccount(this)">
+                <span class="account-id">A005280528</span>
+                <span class="copy-hint">点击复制</span>
+            </div>
+            
+            <p class="account-hint">欢迎关注我们的小红书官方账号，<br>获取最新企划进度、幕后花絮与粉丝日常投稿。</p>
+            
+            <a href="https://www.xiaohongshu.com/user/profile/5d233f5e000000001000fa8d" target="_blank" class="red-link-btn">点击跳转小红书主页 ↗</a>
+        </div>
+
+        <footer>
+            KEEP MICHAELING WITH US<br>
+            🌍𝐌𝐉全球华人之家🕊️ · 版权所有
+        </footer>
+
+    </div>
+
+    <script>
+        // 背景星星扩散脚本
+        const field = document.getElementById('starField');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 2 + 1 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 5 + 's';
+            field.appendChild(star);
+        }
+
+        // ==========================================
+        // 核心功能：一键复制账号到剪贴板
+        // ==========================================
+        function copyAccount(element) {
+            // 自动从当前点击的框里提取 .account-id 里的文字
+            const textToCopy = element.querySelector('.account-id').innerText;
+            const hintElement = element.querySelector('.copy-hint');
+
+            // 写入系统剪贴板
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // 成功后的丝滑反馈动画
+                hintElement.innerHTML = '✅ 复制成功';
+                hintElement.style.color = '#78f39c'; // 变成微信绿
+                hintElement.style.background = 'rgba(120, 243, 156, 0.15)';
+                hintElement.style.borderColor = '#78f39c';
+
+                // 2秒后恢复原状
+                setTimeout(() => {
+                    hintElement.innerHTML = '点击复制';
+                    hintElement.style.color = '';
+                    hintElement.style.background = '';
+                    hintElement.style.borderColor = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('复制失败，浏览器可能不支持:', err);
+                alert('复制失败，请手动长按复制哦');
+            });
+        }
+    </script>
+</div>
+
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-music.js"></script>
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-pjax.js"></script>
+
+</body>
+</html>

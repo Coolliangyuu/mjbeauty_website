@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>A GIFT FOR MICHAEL - 🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+    <meta property="og:title" content="A GIFT FOR MICHAEL - 🌍𝐌𝐉全球华人之家🕊️">
+    <meta property="og:description" content="当倒计时归零，无尽的思念将交织成璀璨星光。这是我们献给流行音乐之王的独家记忆。">
+    <meta property="og:image" content="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+    <style>
+        /* =========================================
+           引入自定义字体：霞鹜文楷
+           ========================================= */
+        @font-face {
+            font-family: 'MJQuotesFont';
+            src: url('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/LXGWWenKai-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        :root {
+            --bg-color-1: #090a0f; 
+            --bg-color-2: #14162b;
+            --bg-color-3: #1a1224;
+            --gold-primary: #d4af37;   
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0; 
+        }
+
+        html {
+            background-color: #090a0f !important; 
+        }
+        
+        body {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow-x: hidden;
+            color: var(--text-main);
+            /* 弃用 transparent，改用实体背景色 */
+            background-color: #090a0f !important; 
+        }
+
+        .animated-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(120deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3), var(--bg-color-1));
+            background-size: 300% 300%;
+            animation: gradientMove 18s ease-in-out infinite;
+            z-index: 0; 
+        }
+
+        .stardust {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='40' r='1.5' fill='%23d4af37' opacity='0.8'/%3E%3Ccircle cx='120' cy='200' r='1' fill='%23ffffff' opacity='0.5'/%3E%3Ccircle cx='250' cy='80' r='2' fill='%23d4af37' opacity='0.6'/%3E%3Ccircle cx='200' cy='280' r='1.5' fill='%23ffffff' opacity='0.8'/%3E%3Ccircle cx='80' cy='150' r='1' fill='%23d4af37' opacity='0.4'/%3E%3C/svg%3E");
+            z-index: 1; animation: stardustFloat 90s linear infinite; pointer-events: none; 
+        }
+
+        .stardust.layer2 {
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='300' r='1.5' fill='%23ffffff' opacity='0.6'/%3E%3Ccircle cx='320' cy='120' r='2' fill='%23d4af37' opacity='0.8'/%3E%3Ccircle cx='180' cy='50' r='1' fill='%23ffffff' opacity='0.4'/%3E%3C/svg%3E");
+            animation: stardustFloat 150s linear infinite reverse; opacity: 0.6; z-index: 2; pointer-events: none;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes stardustFloat {
+            0% { background-position: 0px 0px; }
+            100% { background-position: -600px -600px; }
+        }
+
+        .curtain-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(20,22,43,0.9) 0%, #050505 80%);
+            z-index: 3;
+            transition: opacity 1.5s ease, visibility 1.5s;
+        }
+
+        #quotesContainer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 4; overflow: hidden;
+        }
+
+        .floating-quote {
+            position: absolute; bottom: -150px; max-width: 350px; text-align: center;
+            font-family: "MJQuotesFont", "Optima", "Georgia", "PingFang SC", serif;
+            font-style: normal;
+            line-height: 1.6; 
+            transform: translateX(-50%); 
+        }
+
+        @keyframes floatUpAnim {
+            0% { transform: translate(-50%, 0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(-50%, -120vh); opacity: 0; }
+        }
+
+        .cinematic-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 100; transition: opacity 1.5s ease, visibility 1.5s; overflow: hidden;
+        }
+
+        .spotlight {
+            position: absolute; top: -10vh; left: 50%; transform: translateX(-50%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0.05) 40%, transparent 70%);
+            pointer-events: none; mix-blend-mode: screen; z-index: 101;
+        }
+
+        .intro-box {
+            text-align: center; display: flex; flex-direction: column; align-items: center;
+            padding: 20px; z-index: 102; 
+        }
+
+        .gold-line {
+            width: 1px; height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--gold-primary), transparent);
+            margin: 15px 0;
+        }
+
+        .kicker {
+            color: var(--gold-primary); font-size: 1rem; letter-spacing: 0.5em; 
+            margin: 0 0 10px 0; margin-right: -0.5em; opacity: 0.9; font-weight: 300;
+        }
+
+        .main-title {
+            font-size: 3rem; letter-spacing: 0.1em; margin: 10px 0 20px 0; font-weight: 300;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .timer-display {
+            display: flex; gap: 20px; justify-content: center; margin: 25px 0 30px 0;
+        }
+        
+        .time-block {
+            display: flex; flex-direction: column; align-items: center;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(212, 175, 55, 0.3); 
+            border-radius: 12px; padding: 15px 20px; min-width: 70px; 
+            backdrop-filter: blur(8px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); 
+        }
+
+        .time-block span {
+            font-size: 3.5rem; font-weight: 300; color: var(--gold-primary);
+            text-shadow: 0 0 25px var(--gold-glow); font-variant-numeric: tabular-nums; line-height: 1;
+        }
+
+        .time-block label {
+            font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; letter-spacing: 2px;
+        }
+
+        .target-date-text {
+            color: #ffffff; font-size: 1.1rem; letter-spacing: 3px; margin: 10px 0; font-weight: 300;
+        }
+
+        .disclaimer-text {
+            color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; letter-spacing: 1px; margin: 10px 0 0 0;
+        }
+
+        .elegant-btn {
+            background: transparent; border: 1px solid rgba(212, 175, 55, 0.4); color: var(--gold-primary);
+            padding: 14px 40px; font-size: 0.95rem; letter-spacing: 6px; text-indent: 6px;
+            cursor: pointer; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            outline: none; margin: 10px 0; border-radius: 4px;
+        }
+
+        .elegant-btn:hover {
+            color: #000; border-color: var(--gold-primary);
+            background-color: var(--gold-primary); box-shadow: 0 0 25px var(--gold-glow);
+        }
+
+        .main-portal {
+            position: relative; width: 100%; min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;     
+            padding-bottom: 10vh; box-sizing: border-box; z-index: 10; 
+            transform: scale(1.05); filter: blur(20px); opacity: 0;
+            transition: opacity 2s ease, transform 2.5s cubic-bezier(0.25, 1, 0.5, 1), filter 2s ease;
+        }
+
+        .main-portal.revealed { transform: scale(1); filter: blur(0); opacity: 1; }
+
+        .portal-header {
+            display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 70px; 
+        }
+
+        .mj-icon {
+            width: 80px; height: auto; margin-bottom: 25px; 
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2)); transition: transform 0.3s ease;
+        }
+
+        .portal-header h2 {
+            color: var(--gold-primary); font-size: 2.2rem; letter-spacing: 6px;
+            margin: 0 0 15px 0; font-weight: 300; text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .portal-header .group-name {
+            color: #e0e0eb; font-size: 1.05rem; font-weight: 300;
+            letter-spacing: 2px; margin: 0; opacity: 0.9; line-height: 1.5; 
+        }
+
+        .activity-container {
+            display: flex; max-width: 1000px; width: 100%; padding: 0 20px; box-sizing: border-box;
+            justify-content: center; align-items: flex-start; gap: 100px; 
+        }
+
+        .activity-section { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            transform: translateZ(0); 
+            will-change: transform, opacity;
+        }
+
+        .activity-title {
+            font-size: 1.4rem; color: var(--text-main); margin: 0 0 25px 0; letter-spacing: 4px; font-weight: 400;
+        }
+
+        .action-btn {
+            background: rgba(0, 0, 0, 0.2); border: 1px solid var(--gold-primary);
+            color: var(--gold-primary); padding: 12px 50px; font-size: 1rem; 
+            letter-spacing: 3px; cursor: pointer; transition: all 0.3s ease;
+            text-align: center; text-decoration: none; border-radius: 12px; 
+            margin-bottom: 25px; backdrop-filter: blur(5px); 
+        }
+
+        .action-btn:hover {
+            background-color: var(--gold-primary); color: #000;
+            box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-2px);
+        }
+
+        .activity-intro {
+            color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;
+            letter-spacing: 1px; margin: 0; text-align: center; max-width: 360px; 
+            padding-top: 80px;
+        }
+
+        /* =========================================
+           新增：精美的暂停/播放切换按钮
+           ========================================= */
+        .scroll-toggle-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-muted);
+            border-radius: 20px;
+            padding: 6px 16px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px; /* 与滚动框留出呼吸间距 */
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            outline: none;
+        }
+
+        .scroll-toggle-btn:hover {
+            color: var(--gold-primary);
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .scroll-toggle-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+            transition: all 0.3s ease;
+        }
+
+        /* =========================================
+           滚动简介容器
+           ========================================= */
+        .scrolling-intro-wrapper {
+            width: 100%;
+            max-width: 360px; 
+            height: 220px; 
+            position: relative;
+            transform: translateZ(0); 
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+        }
+
+        .scrolling-intro-box {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+
+        .scrolling-intro-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .intro-content {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 10px 0; 
+        }
+
+        .intro-content strong {
+            color: var(--gold-primary);
+            font-weight: 400;
+            display: block;
+            margin: 20px 0 5px 0;
+            letter-spacing: 2px;
+        }
+        
+
+        @media (max-width: 768px) {
+            .main-title { font-size: 2rem; letter-spacing: 0.1em; }
+            .kicker { font-size: 0.9rem; }
+            .timer-display { gap: 10px; margin: 20px 0; }
+            .time-block { padding: 10px 12px; min-width: 55px; border-radius: 8px; }
+            .time-block span { font-size: 2.2rem; }
+            .target-date-text { font-size: 0.95rem; }
+            .main-portal { justify-content: flex-start; padding-top: 8vh; padding-bottom: 8vh; }
+            .mj-icon { width: 60px; margin-bottom: 20px; }
+            .portal-header { margin-bottom: 50px; }
+            .portal-header h2 { font-size: 1.8rem; letter-spacing: 3px; }
+            .portal-header .group-name { font-size: 0.9rem; padding: 0 10px; }
+            .activity-container { flex-direction: column; align-items: center; gap: 50px; }
+            .activity-title { font-size: 1.3rem; margin-bottom: 20px; }
+            .action-btn { padding: 12px 40px; width: 220px; box-sizing: border-box; }
+            .activity-intro { font-size: 0.85rem; max-width: 85%; padding-top: 0px;}
+            .floating-quote { max-width: 280px; }
+            .scrolling-intro-wrapper { max-width: 85%; height: 160px; } 
+        }
+    </style>
+</head>
+<body>
+<div id="pjax-container">
+    <div class="animated-bg"></div>
+    <div class="stardust"></div>
+    <div class="stardust layer2"></div>
+    
+    <div id="curtainBg" class="curtain-bg"></div>
+
+    <div id="quotesContainer"></div>
+
+    <div id="cinematicOverlay" class="cinematic-overlay">
+        <div class="spotlight"></div>
+        <div class="intro-box">
+            <h3 class="kicker">二〇二六特别企划</h3>
+            <h1 class="main-title">A GIFT FOR MICHAEL</h1>
+            
+            <div id="countdownState" style="transition: opacity 0.8s ease;">
+                <div class="timer-display">
+                    <div class="time-block"><span id="cd-days">00</span><label>天</label></div>
+                    <div class="time-block"><span id="cd-hours">00</span><label>时</label></div>
+                    <div class="time-block"><span id="cd-minutes">00</span><label>分</label></div>
+                    <div class="time-block"><span id="cd-seconds">00</span><label>秒</label></div>
+                </div>
+                <p class="target-date-text" id="targetDateDisplay"></p>
+                <p class="disclaimer-text">* 具体时间可能会有变化，请以实际为准 *</p>
+                <br>
+                <button id="unveilBtn" class="elegant-btn">揭开帷幕</button>
+            </div>
+
+            <div id="readyState" style="display: none; flex-direction: column; align-items: center; opacity: 0; transition: opacity 1.5s ease;">
+                <div class="gold-line"></div>
+                <button id="unveilBtn" class="elegant-btn">揭开帷幕</button>
+                <div class="gold-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainPortal" class="main-portal">
+        <header class="portal-header">
+            <img src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/IMG_1483.svg" alt="🌍𝐌𝐉全球华人之家🕊️" class="mj-icon">
+            <h2>A GIFT FOR MICHAEL</h2>
+            <h3 class="group-name">🌍𝐌𝐉全球华人之家🕊️ · 二〇二六 六·二五 永懷星光🕯️</h3>
+        </header>
+
+        <main class="activity-container">
+            <section class="activity-section">
+                <h3 class="activity-title">活动筹备中...</h3>
+                <a href="" class="action-btn">静候佳音</a>
+                <p class="activity-intro">
+                    此活动还未到解锁时间<br>请您敬请期待老师们的大作！
+                </p>
+            </section>
+            
+            <section class="activity-section">
+                <h3 class="activity-title">《千人成像巨献》</h3>
+                <a href="./qrcx/" class="action-btn">开启探索</a>
+                
+                <button id="scrollToggleBtn" class="scroll-toggle-btn">
+                    <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                    <span>暂停</span>
+                </button>
+
+                <div class="scrolling-intro-wrapper">
+                    <div class="scrolling-intro-box" id="mosaicScrollBox">
+                        <div class="intro-content">
+                            <strong>我们的 MJ，我们的世界</strong>
+                            <strong>关于“我们”的史诗</strong>
+                            Michael Jackson曾无数次向世界表达过，无论肤色和种族，我们应为一体。<br>
+                            为了致敬这份跨越时空和国界的大爱，我们发起了一场特殊的拼图活动。不仅是向偶像致敬，更是对他所呼吁的“人类一家”精神的延续。<br>
+                            当所有面孔最终融合成那个熟悉的身影，我们看到的不是像素，而是每一位迈迷心中从未熄灭的爱。
+                            
+                            <strong>算法下的数字重构</strong>
+                            我们将海量的原始影像进行重构与色阶映射，对数千份原始素材进行色彩直方图分析与重采样，确保每一份影像在构建偶像面容的同时，依然保持着最真实的个体。<br>
+                            每一张小小的照片，都是这幅宏大肖像不可或缺的基石，也是对他一生践行的爱与和平的最直接呈现——正是因为有了每一个独立的你，才有了完整、不朽的 MJ。
+                            
+                            <strong>点击你的专属坐标</strong>
+                            这不仅是一张海报，更是一个交互式地图。我们在海报中嵌入了坐标索引，每一个像素块都锚定着一个具体影像。<br>
+                            如果你参加了625致敬活动，就可以在海报迷宫中解锁属于你的坐标。<br>
+                            每一个色块，都是你与偶像之间，最真实的痕迹。<br><br>
+                            该作品将于 2026 年 6 月 25 日安置于 Holly Terrace 门外展出。
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        (function() {
+            
+            // --- 寄语飘升 ---
+            async function loadAndFloatQuotes() {
+                let quotes = [];
+                try {
+                    const res = await fetch('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-quotes.txt');
+                    const text = await res.text();
+                    quotes = text.split('\n').map(q => q.trim()).filter(q => q.length > 0);
+                } catch (e) { return; }
+
+                if (quotes.length === 0) return;
+                const container = document.getElementById('quotesContainer');
+
+                setInterval(() => {
+                    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+                    const el = document.createElement('div');
+                    el.className = 'floating-quote';
+                    el.innerText = randomQuote;
+                    el.style.left = (Math.random() * 70 + 15) + '%';
+                    el.style.fontSize = (Math.random() * 0.35 + 0.85) + 'rem';
+                    const duration = Math.random() * 10 + 18;
+                    el.style.animation = `floatUpAnim ${duration}s linear forwards`;
+                    const opacity = (Math.random() * 0.4 + 0.4).toFixed(2);
+                    el.style.color = `rgba(212, 175, 55, ${opacity})`;
+                    el.style.textShadow = `0 0 15px rgba(212, 175, 55, 0.3)`;
+
+                    container.appendChild(el);
+                    setTimeout(() => { if (container.contains(el)) container.removeChild(el); }, duration * 1000);
+                }, 2500); 
+            }
+            loadAndFloatQuotes();
+
+            // --- 倒计时系统 ---
+            const targetConfig = { year: 2026, month: 6, day: 25, hour: 10, minute: 0, second: 0, timezoneOffset: 8 };
+            const displayStr = `${targetConfig.year}年${targetConfig.month}月${targetConfig.day}日 ${String(targetConfig.hour).padStart(2, '0')}:${String(targetConfig.minute).padStart(2, '0')}`;
+            document.getElementById('targetDateDisplay').innerText = displayStr;
+            const targetTimestamp = Date.UTC(targetConfig.year, targetConfig.month - 1, targetConfig.day, targetConfig.hour - targetConfig.timezoneOffset, targetConfig.minute, targetConfig.second);
+            let timeOffset = 0; 
+
+            async function syncNetworkTime() {
+                try {
+                    const res = await fetch('https://cn.apihz.cn/api/time/getapi.php?id=10017288&key=418a35ec4fa6f31ccc8237d19108f5e1&type=6', { cache: 'no-store' });
+                    const data = await res.json();
+                    if (data.code === 200 && data.msg && data.msg.length === 14) {
+                        const timeStr = data.msg; 
+                        const y = parseInt(timeStr.substring(0, 4)), mon = parseInt(timeStr.substring(4, 6)) - 1, d = parseInt(timeStr.substring(6, 8)), h = parseInt(timeStr.substring(8, 10)), m = parseInt(timeStr.substring(10, 12)), s = parseInt(timeStr.substring(12, 14));
+                        const networkTimestamp = Date.UTC(y, mon, d, h - 8, m, s);
+                        timeOffset = networkTimestamp - Date.now();
+                    }
+                } catch (e) {}
+            }
+            syncNetworkTime();
+
+            let timerInterval;
+            function updateCountdown() {
+                const now = Date.now() + timeOffset;
+                const diff = targetTimestamp - now;
+                const countdownState = document.getElementById('countdownState');
+                const readyState = document.getElementById('readyState');
+
+                if (diff <= 0) {
+                    clearInterval(timerInterval);
+                    countdownState.style.opacity = '0';
+                    setTimeout(() => {
+                        countdownState.style.display = 'none';
+                        readyState.style.display = 'flex';
+                        setTimeout(() => { readyState.style.opacity = '1'; }, 50);
+                    }, 800); 
+                    return;
+                }
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24)), h = Math.floor((diff / (1000 * 60 * 60)) % 24), m = Math.floor((diff / 1000 / 60) % 60), s = Math.floor((diff / 1000) % 60);
+                document.getElementById('cd-days').innerText = String(d).padStart(2, '0');
+                document.getElementById('cd-hours').innerText = String(h).padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = String(m).padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = String(s).padStart(2, '0');
+            }
+            updateCountdown();
+            timerInterval = setInterval(updateCountdown, 1000);
+
+            // ==========================================
+            // 🌟 核心：支持按钮暂停的丝滑滚动逻辑
+            // ==========================================
+            const scrollBox = document.getElementById('mosaicScrollBox');
+            const toggleBtn = document.getElementById('scrollToggleBtn');
+            const toggleText = toggleBtn.querySelector('span');
+            const svgElem = toggleBtn.querySelector('svg');
+            
+            const pauseSVG = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+            const playSVG = `<path d="M8 5v14l11-7z"/>`;
+
+            let isHovered = false;
+            let isScrollingDown = true;
+            let isWaiting = false;
+            let isPausedByUser = false; // 新增：用户手动强制暂停标记
+            let scrollPos = 0; 
+
+            // --- 按钮点击切换逻辑 ---
+            toggleBtn.addEventListener('click', () => {
+                isPausedByUser = !isPausedByUser;
+                if (isPausedByUser) {
+                    svgElem.innerHTML = playSVG;
+                    toggleText.innerText = '继续';
+                    toggleBtn.style.color = 'var(--gold-primary)'; 
+                    toggleBtn.style.borderColor = 'var(--gold-primary)';
+                } else {
+                    svgElem.innerHTML = pauseSVG;
+                    toggleText.innerText = '暂停';
+                    toggleBtn.style.color = ''; 
+                    toggleBtn.style.borderColor = '';
+                    scrollPos = scrollBox.scrollTop; // 恢复时同步真实位置防跳动
+                }
+            });
+
+            // 电脑端悬停与移开控制
+            scrollBox.addEventListener('mouseenter', () => isHovered = true);
+            scrollBox.addEventListener('mouseleave', () => isHovered = false);
+
+            // 手机端触摸控制
+            let touchTimeout;
+            scrollBox.addEventListener('touchstart', () => {
+                isHovered = true;
+                clearTimeout(touchTimeout);
+            }, {passive: true});
+            scrollBox.addEventListener('touchend', () => {
+                touchTimeout = setTimeout(() => { isHovered = false; }, 1500);
+            });
+
+            function autoScroll() {
+                // 如果用户手动点击了暂停，或者正在交互/等待，则只同步位置不往下滚
+                if (isHovered || isWaiting || isPausedByUser) {
+                    scrollPos = scrollBox.scrollTop; 
+                    requestAnimationFrame(autoScroll);
+                    return;
+                }
+
+                if (isScrollingDown) {
+                    scrollPos += 0.4; 
+                    scrollBox.scrollTop = scrollPos;
+                    
+                    if (Math.ceil(scrollBox.scrollTop) >= scrollBox.scrollHeight - scrollBox.clientHeight - 1) {
+                        isWaiting = true; 
+                        setTimeout(() => {
+                            isScrollingDown = false; 
+                            isWaiting = false;
+                        }, 2000); 
+                    }
+                } else {
+                    scrollPos -= 4; 
+                    scrollBox.scrollTop = scrollPos;
+                    
+                    if (scrollPos <= 0) {
+                        scrollPos = 0;
+                        scrollBox.scrollTop = 0;
+                        isWaiting = true;
+                        setTimeout(() => {
+                            isScrollingDown = true; 
+                            isWaiting = false;
+                        }, 2000); 
+                    }
+                }
+                requestAnimationFrame(autoScroll);
+            }
+
+            // --- 揭开帷幕交互 ---
+            const btn = document.getElementById('unveilBtn');
+            const overlay = document.getElementById('cinematicOverlay');
+            const curtainBg = document.getElementById('curtainBg');
+            const portal = document.getElementById('mainPortal');
+
+            btn.addEventListener('click', function() {
+                overlay.style.opacity = '0';
+                curtainBg.style.opacity = '0';
+                
+                setTimeout(() => {
+                    portal.classList.add('revealed');
+                    setTimeout(() => { 
+                        overlay.style.visibility = 'hidden'; 
+                        curtainBg.style.visibility = 'hidden'; 
+                        
+                        setTimeout(() => {
+                            scrollPos = scrollBox.scrollTop;
+                            requestAnimationFrame(autoScroll);
+                        }, 2000);
+                        
+                    }, 1500);
+                }, 200); 
+            });
+        })();
+    </script>
+</div>
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-music.js"></script>
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-pjax.js"></script>
+</body>
+</html>

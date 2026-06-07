@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f0c29">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Neverland - 🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="🌍𝐌𝐉全球华人之家🕊️">
+    <meta property="og:description" content="Love Lives Forever - 迈克尔·杰克逊精神家园">
+    <meta property="og:image" content="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/IMG_1483%281%29.png">
+
+    <link rel="stylesheet" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-quotes_css.css">
+
+    <style>
+        /* ==================================
+           自定义留言字体载入
+           ================================== */
+        @font-face {
+            font-family: 'MyMessageFont'; /* 给你的字体起个代号 */
+            /* 下面这行，把你自己的字体直链替换进去 */
+            src: url('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/LXGWWenKai-Regular.ttf'); 
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap; /* 优化加载体验：字体没加载出来前先显示默认字体 */
+        }
+
+        :root {
+            --mj-gold: #f3cf7a;
+            --mj-blue: #1a2a6c;
+        }
+
+        /* === Safari 白边修复 === */
+        html { background-color: #0f0c29 !important; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0c29 !important; 
+            color: #fff;
+            font-family: "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+        }
+
+        /* 固定伪元素承载渐变背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            z-index: -2; 
+            pointer-events: none;
+        }
+
+        /* --- Header --- */
+        header {
+            position: relative; 
+            height: 60vh; 
+            min-height: 220px; 
+            display: flex;
+            align-items: center;         
+            justify-content: flex-start; 
+            padding: 0 10%;              
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden; 
+        }
+
+        .header-bg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; 
+            object-position: top right; 
+            z-index: 0; 
+            pointer-events: none; 
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 60%);
+            z-index: 1; 
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2; 
+            max-width: 50%; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center;
+        }
+
+        .header-text-img {
+            width: 100%; 
+            height: auto;
+            max-height: 60vh;
+            object-fit: contain; 
+            filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.6));
+            transition: all 0.3s ease;
+        }
+
+        .header-slogan {
+            margin-top: 0px;
+            font-size: 1.25rem;
+            color: #e0e0e0; 
+            letter-spacing: 5px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+        }
+
+        .header-sub-slogan {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #b0b0b0; 
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* --- 瀑布流 --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            column-count: 3;
+            column-gap: 20px;
+        }
+
+        .message-card {
+            break-inside: avoid;
+            display: inline-block;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .message-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(243, 207, 122, 0.2);
+            border-color: var(--mj-gold);
+        }
+
+        /* === 留言内容样式（已适配自定义字体） === */
+        .content {
+            font-family: 'MyMessageFont', "Microsoft YaHei", sans-serif; /* 优先使用你载入的字体 */
+            font-size: 1.1rem; /* 手写/文艺字体稍微放大一点更清晰 */
+            line-height: 1.8; /* 增加行距提升阅读体验 */
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            white-space: pre-wrap;
+            letter-spacing: 1px; /* 加一点字间距更有味道 */
+        }
+
+        /* === 留言署名样式（已适配自定义字体） === */
+        .author {
+            font-family: 'MyMessageFont', "Microsoft YaHei", sans-serif; 
+            text-align: right;
+            font-weight: bold;
+            color: var(--mj-gold);
+            font-size: 0.95rem;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+        }
+
+        /* ==================================
+           右下角悬浮留言按钮 (长方体包着内嵌的小正方体)
+           ================================== */
+        .add-quote-wrapper {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px; /* 文字和小正方体的间距 */
+            background: rgba(243, 207, 122, 0.1); /* 较暗的半透明底色 */
+            backdrop-filter: blur(15px); /* 磨砂玻璃效果 */
+            border: 1px solid rgba(243, 207, 122, 0.3); /* 金色边框 */
+            border-radius: 16px; /* 大外框：带圆弧的长方体 */
+            padding: 8px 8px 8px 20px; /* 左侧留出文字空间，右侧紧贴小按钮 */
+            text-decoration: none;
+            z-index: 100;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .add-quote-wrapper:hover {
+            transform: translateY(-5px);
+            background: rgba(243, 207, 122, 0.2);
+            box-shadow: 0 8px 25px rgba(243, 207, 122, 0.5);
+            border-color: var(--mj-gold);
+        }
+
+        /* 左侧文字 */
+        .add-text {
+            color: var(--mj-gold);
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* 右侧内嵌的小正方体按钮 */
+        .add-inner-btn {
+            width: 42px;
+            height: 42px;
+            background: rgba(243, 207, 122, 0.25);
+            border: 1px solid rgba(243, 207, 122, 0.5);
+            border-radius: 10px; /* 内部小正方体的圆润边角 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--mj-gold);
+            font-size: 1.8rem;
+            font-weight: 300;
+            line-height: 1;
+            transition: all 0.3s ease;
+        }
+
+        /* 鼠标悬停时，小方块变实心，非常有质感 */
+        .add-quote-wrapper:hover .add-inner-btn {
+            background: var(--mj-gold);
+            color: #000;
+            box-shadow: 0 0 15px rgba(243, 207, 122, 0.6);
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 900px) { 
+            .container { column-count: 2; } 
+            .header-content { max-width: 70%; }
+        }
+        @media (max-width: 600px) { 
+            .container { column-count: 1; } 
+            header {
+                height: 35vh; 
+                min-height: 180px;
+                justify-content: center; 
+                padding: 0 5%;
+            }
+            .header-content { max-width: 90%; } 
+            .header-slogan { font-size: 1rem; letter-spacing: 3px; margin-top: 15px; }
+            .header-sub-slogan { font-size: 0.7rem; letter-spacing: 1px; margin-top: 6px; }
+            header::before { background: rgba(0,0,0,0.2); } 
+            
+            /* 手机端：长方体内嵌方块按钮缩小 */
+            .add-quote-wrapper {
+                bottom: 25px;
+                right: 20px;
+                padding: 6px 6px 6px 15px;
+                border-radius: 14px; /* 手机端外框圆弧略微缩小 */
+                gap: 10px;
+            }
+            .add-text {
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+            .add-inner-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.5rem;
+                border-radius: 8px; /* 手机端小方块圆弧略微缩小 */
+            }
+            /* 修复加了 pjax-container 后的排版问题 */
+            #pjax-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            footer { padding-bottom: 90px; } 
+        }
+
+        #loading { text-align: center; color: var(--mj-gold); padding: 50px; }
+    </style>
+</head>
+<body>
+<div id="pjax-container">
+    <div class="stars"></div>
+
+    <header>
+        <img src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/quotes/bg.png" class="header-bg-img" alt="MJ Stage Background">
+        
+        <div class="header-content">
+            <img src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/quotes/text.png" class="header-text-img" alt="Michael Jackson KING OF POP Love lives forever">
+            <div class="header-slogan">🌍𝐌𝐉全球华人之家🕊️</div>
+            <div class="header-sub-slogan">永驻心中的梦幻庄园 · Forever Neverland</div>
+        </div>
+    </header>
+
+    <div id="loading">正在连接 Neverland...</div>
+    <div class="container" id="messageBoard"></div>
+
+    <a href="https://docs.qq.com/form/page/DRkFPekt3S1hYSEFh" target="_blank" class="add-quote-wrapper">
+        <span class="add-text">我也有话对迈说</span>
+        <div class="add-inner-btn">+</div>
+    </a>
+
+    <footer>
+        <p>Keep on dancing, Michael. We love you more.</p>
+    </footer>
+
+    <script>
+        // 用匿名函数包裹，防止 PJAX 重复进入时产生 const 变量冲突报错
+        (function() {
+            const TXT_URL = './mj-quotes.txt';
+
+            async function fetchAndParse() {
+                const board = document.getElementById('messageBoard');
+                const loading = document.getElementById('loading');
+                
+                if (!board || !loading) return; // 安全校验
+
+                try {
+                    const response = await fetch(TXT_URL);
+                    if (!response.ok) throw new Error();
+                    
+                    const rawText = await response.text();
+                    const lines = rawText.split('\n').filter(line => line.trim() !== '');
+                    
+                    loading.style.display = 'none';
+                    
+                    // 【关键修复】清空面板，防止 PJAX 来回切换导致留言重复叠加
+                    board.innerHTML = ''; 
+
+                    lines.forEach(line => {
+                        let contentText = line;
+                        let authorText = '';
+
+                        if (line.includes('爱来自@')) {
+                            const parts = line.split('爱来自@');
+                            contentText = parts[0].trim();
+                            authorText = '爱来自 @' + parts[1].trim();
+                        }
+
+                        const card = document.createElement('div');
+                        card.className = 'message-card';
+                        
+                        let html = `<div class="content">${contentText}</div>`;
+                        if (authorText) {
+                            html += `<div class="author">—— ${authorText}</div>`;
+                        }
+                        
+                        card.innerHTML = html;
+                        board.appendChild(card);
+                    });
+
+                } catch (error) {
+                    loading.innerText = '连接 Neverland 失败，请联系管理员检查。';
+                    console.error(error);
+                }
+            }
+
+            fetchAndParse();
+        })();
+    </script>
+</div>
+
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-music.js"></script>
+  <script src="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/mj-pjax.js"></script>
+  
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#090a0f">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>站点升级中 - 🌍𝐌𝐉全球华人之家🕊️</title>
+    <link rel="shortcut icon" type="image/ico" href="https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/logo.jpg">
+
+    <style>
+        :root {
+            --mj-gold: #f3cf7a;
+            --mj-dark: #090a0f;
+            --gold-glow: rgba(243, 207, 122, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* 强制打上实体深色底纹，防止系统橡皮筋回弹露白 */
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: var(--mj-dark) !important;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 梦幻流动夜空背景 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, #14162b 0%, var(--mj-dark) 100%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* 星尘微粒背景 */
+        .starfield {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='50' r='1.2' fill='%23f3cf7a' opacity='0.6'/%3E%3Ccircle cx='150' cy='180' r='1' fill='%23ffffff' opacity='0.4'/%3E%3Ccircle cx='230' cy='90' r='1.5' fill='%23f3cf7a' opacity='0.7'/%3E%3Ccircle cx='80' cy='240' r='1' fill='%23ffffff' opacity='0.5'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* 核心内容剧场卡片 */
+        .maintenance-container {
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+            max-width: 90%;
+        }
+
+        /* 专属艺术 Logo 头像缩放氛围 */
+        .logo-box {
+            position: relative;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .mj-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 1px solid rgba(243, 207, 122, 0.2);
+            box-shadow: 0 0 30px var(--gold-glow);
+            animation: logoPulse 4s infinite ease-in-out;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 25px var(--gold-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(243, 207, 122, 0.6); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            letter-spacing: 5px;
+            color: var(--mj-gold);
+            font-weight: 300;
+            margin-bottom: 15px;
+            text-shadow: 0 0 20px rgba(243, 207, 122, 0.3);
+        }
+
+        .notice-text {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        /* =========================================
+           奢华流金动态进度条组件
+           ========================================= */
+        .progress-wrapper {
+            width: 280px;
+            margin: 0 auto 40px auto;
+            text-align: center;
+        }
+        .progress-track {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 65%; /* 👈 你可以在这里手动调整当前更新的百分比 */
+            background: linear-gradient(90deg, #f3cf7a, #ffffff, #f3cf7a);
+            background-size: 200% 100%;
+            border-radius: 2px;
+            box-shadow: 0 0 12px var(--mj-gold), 0 0 6px #ffffff;
+            animation: flowLight 2s linear infinite;
+        }
+        .progress-status {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+        .progress-num {
+            color: var(--mj-gold);
+            font-weight: bold;
+        }
+
+        @keyframes flowLight {
+            0% { background-position: 100% 0%; }
+            100% { background-position: -100% 0%; }
+        }
+
+        footer {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            line-height: 1.6;
+        }
+
+        /* 手机端极端屏幕专项防叠放适配 */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; letter-spacing: 3px; }
+            .notice-text { font-size: 0.95rem; margin-bottom: 25px; }
+            .mj-logo { width: 100px; height: 100px; }
+            .progress-wrapper { width: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="starfield"></div>
+
+    <div class="maintenance-container">
+        <div class="logo-box">
+        </div>
+        
+        <h1>MJBEAUTY 升级维护中</h1>
+        
+        <p class="notice-text">
+            为了带给你更极致的视听特展体验<br>
+            华人之家空间站正在进行内核重构，请稍事等待
+        </p>
+
+        <div class="progress-wrapper">
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-status">
+                <span>Neverland 补给中...</span>
+                <span class="progress-num">65%</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        LOVE LIVES FOREVER | MJBEAUTY.TOP<br>
+        思念永无止境，星光破茧成蝶
+    </footer>
+
+</body>
+</html>

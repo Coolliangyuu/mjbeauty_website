@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>高清无极缩放照片墙</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/openseadragon.min.js"></script>
+    <style>
+        body { margin: 0; background: #111; font-family: sans-serif; overflow: hidden; }
+        /* 占满全屏的阅读器 */
+        #viewer { width: 100vw; height: 100vh; }
+        
+        /* 悬浮的原图展示面板 */
+        #info-panel {
+            position: absolute; top: 20px; left: 20px; z-index: 10;
+            background: rgba(0,0,0,0.85); padding: 20px; border-radius: 12px;
+            display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid #333; color: white;
+            max-width: 400px;
+        }
+        #info-panel img { 
+            width: 100%; height: auto; 
+            display: block; margin-top: 15px; 
+            border-radius: 6px;
+        }
+        #close-btn { 
+            color: #ff5f56; cursor: pointer; float: right; 
+            font-size: 18px; font-weight: bold; user-select: none;
+        }
+        #file-name { word-wrap: break-word; font-size: 14px; color: #ccc; margin-right: 20px;}
+        /* 悬浮的原图展示面板 - 优化了手机端显示 */
+        #info-panel {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; background: rgba(0,0,0,0.85); padding: 20px; border-radius: 12px;
+            display: none; box-shadow: 0 10px 50px rgba(0,0,0,1);
+            border: 1px solid #444; color: white;
+            width: 90vw; /* 手机端宽度适配 */
+            max-width: 600px; /* 电脑端最大宽度 */
+            text-align: center;
+        }
+        #info-panel img { 
+            max-width: 100%; max-height: 60vh; /* 防止图片在手机上太高顶出屏幕 */
+            width: auto; height: auto; display: block; margin: 15px auto; border-radius: 6px;
+        }
+        #close-btn { 
+            position: absolute; top: 10px; right: 15px;
+            color: #ff5f56; cursor: pointer; font-size: 24px; font-weight: bold;
+        }
+
+        /* 👑 1. 右下角欢迎提示框 */
+/* 👑 1. 醒目的欢迎横幅 (由右下角改为屏幕顶部居中下落，带金色光晕) */
+        #welcome-toast {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; background: rgba(15, 15, 15, 0.95); color: #fff;
+            padding: 15px 30px; border-radius: 12px;
+            border: 1px solid #e2c08d; 
+            box-shadow: 0 0 25px rgba(226, 192, 141, 0.4); /* 金色呼吸光效 */
+            font-size: 15px; text-align: center; line-height: 1.8;
+            animation: dropDown 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            width: max-content; max-width: 90vw;
+            backdrop-filter: blur(10px);
+        }
+        @keyframes dropDown {
+            from { transform: translate(-50%, -100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+        #close-toast-btn {
+            position: absolute; top: 5px; right: 10px; color: #e2c08d;
+            cursor: pointer; font-size: 18px; font-weight: bold; transition: 0.3s;
+        }
+        #close-toast-btn:hover { color: #fff; transform: scale(1.2); }
+        .toast-icon { font-size: 20px; vertical-align: middle; margin-right: 8px; }
+        .toast-subtext { font-size: 12px; color: #aaa; margin-top: 4px; display: block; }
+
+        /* 🚀 3. 弹窗底部的双按钮组 */
+        .panel-buttons {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 15px;
+        }
+        .view-btn {
+            padding: 10px 20px; text-decoration: none; border-radius: 30px; 
+            font-size: 14px; transition: all 0.3s ease; letter-spacing: 1px;
+        }
+        /* 看个人原图（金色主按钮） */
+        .btn-gold {
+            background: rgba(226, 192, 141, 0.1); border: 1px solid #e2c08d; color: #e2c08d;
+        }
+        .btn-gold:hover { background: rgba(226, 192, 141, 0.3); transform: scale(1.05); }
+        /* 看马赛克全图（银灰色次按钮） */
+        .btn-silver {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid #666; color: #ccc;
+        }
+        .btn-silver:hover { background: rgba(255, 255, 255, 0.15); border-color: #fff; color: #fff; transform: scale(1.05); }
+
+        /* ⏳ 2. 加载动画 (转圈圈) */
+        .loading-spinner {
+            display: none; width: 40px; height: 40px; margin: 30px auto;
+            border: 4px solid rgba(255,255,255,0.1); border-top: 4px solid #e2c08d;
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 🚀 3. 前往查看原图按钮 */
+        .view-original-btn {
+            display: inline-block; margin-top: 5px; padding: 10px 24px;
+            background: rgba(226, 192, 141, 0.1); border: 1px solid #e2c08d;
+            color: #e2c08d; text-decoration: none; border-radius: 30px; font-size: 14px;
+            transition: all 0.3s ease; letter-spacing: 1px;
+        }
+        .view-original-btn:hover { background: rgba(226, 192, 141, 0.3); transform: scale(1.05); }
+
+/* 📱 手机端专属细节适配 */
+        @media (max-width: 768px) {
+            #welcome-toast { 
+                /* 清除乱七八糟的边距，强制完美居中 */
+                top: 20px; 
+                bottom: auto; 
+                left: 50%; 
+                right: auto;
+                transform: translateX(-50%); 
+                width: 90vw; /* 限制宽度不超出屏幕 */
+                padding: 12px 15px; /* 手机上稍微缩小一点内边距 */
+            }
+            #info-panel { padding: 15px; width: 85vw; }
+        }
+/* 🔍 4. 右上角高颜值的搜索框与联想列表 */
+        #search-box {
+            position: fixed; top: 25px; right: 25px; z-index: 1000;
+            background: rgba(15, 15, 15, 0.85); padding: 8px 12px; border-radius: 30px;
+            border: 1px solid rgba(226, 192, 141, 0.5); display: flex; gap: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        #search-box:hover { border-color: #e2c08d; box-shadow: 0 0 20px rgba(226, 192, 141, 0.3); }
+        
+        #search-input-wrapper { position: relative; display: flex; align-items: center; }
+        
+        #search-input {
+            background: transparent; border: none; color: white; outline: none;
+            padding: 5px 10px; width: 180px; font-size: 16px;
+        }
+        #search-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        
+        #search-btn {
+            background: rgba(226, 192, 141, 0.15); border: 1px solid #e2c08d;
+            color: #e2c08d; border-radius: 20px; padding: 5px 15px;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        #search-btn:hover { background: #e2c08d; color: #000; }
+
+        /* 智能搜索联想列表框 */
+        #search-results {
+            position: absolute; top: 40px; left: 0; width: 260px;
+            background: rgba(15, 15, 15, 0.95); border: 1px solid #e2c08d;
+            border-radius: 12px; max-height: 280px; overflow-y: auto;
+            display: none; flex-direction: column; z-index: 1001;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        /* 滚动条美化 */
+        #search-results::-webkit-scrollbar { width: 6px; }
+        #search-results::-webkit-scrollbar-thumb { background: rgba(226, 192, 141, 0.5); border-radius: 3px; }
+
+        .search-item {
+            padding: 12px 15px; color: #fff; cursor: pointer; font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.08); word-break: break-all;
+            transition: 0.2s;
+        }
+        .search-item:last-child { border-bottom: none; }
+        .search-item:hover { background: rgba(226, 192, 141, 0.2); color: #e2c08d; }
+
+        /* 📱 手机端适配：避免和顶部的探索指南撞车，移到下方，且列表改为向上弹出 */
+        @media (max-width: 768px) {
+            #search-box {
+                top: auto; bottom: 30px; right: 50%; transform: translateX(50%);
+                width: max-content;
+            }
+            #search-results {
+                top: auto; bottom: 45px; /* 列表向上生长，防止挡住输入框 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="viewer"></div>
+
+    <div id="info-panel">
+        <span id="close-btn">✖</span>
+        <div id="file-name" style="margin-bottom: 10px; font-size: 14px; color: #aaa; word-wrap: break-word; padding-right: 20px;"></div>
+        
+        <div id="loading-spinner" class="loading-spinner"></div>
+        
+        <img id="original-img" src="" alt="原图">
+        
+        <div class="panel-buttons">
+            <a id="view-mosaic-link" class="view-btn btn-silver" href="https://pan.baidu.com/s/1gNCQpMEf5_JmSc129HebTA?pwd=ps7k" target="_blank">从网盘下载巨大拼接图</a>
+            
+            <a id="view-original-link" class="view-btn btn-gold" href="#" target="_blank">查看此照片原图</a>
+        </div>
+    </div>
+
+    <div id="welcome-toast">
+        <span id="close-toast-btn" onclick="document.getElementById('welcome-toast').style.display='none'">✖</span>
+        <span class="toast-icon">💡</span><strong style="color: #e2c08d; letter-spacing: 2px;">探索指南</strong><br>
+        找到自己的图片点一下即可查看高清原图
+        <span class="toast-subtext">（在线加载图片可能较慢，放大后等几秒才会清晰）</span>
+    </div>
+    
+    <div id="search-box">
+        <div id="search-input-wrapper">
+            <input type="text" id="search-input" placeholder="输入照片名..." oninput="handleInput()" onfocus="handleInput()" onkeypress="if(event.keyCode==13) doSearch()">
+            
+            <div id="search-results"></div>
+        </div>
+        <button id="search-btn" onclick="doSearch()">定位</button>
+    </div>
+
+<script>
+        let tileData = [];
+        
+        // 1. 预先加载坐标映射表
+        fetch('https://1818461212.v.123pan.cn/1818461212/%E7%BD%91%E7%AB%99/mj.lyimc.top/agiftformj/qrcx/tiles5.json')
+            .then(res => res.json())
+            .then(data => { tileData = data; });
+
+        // 2. 初始化 OpenSeadragon 引擎
+        const viewer = OpenSeadragon({
+            id: "viewer",
+            prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.0.0/images/",
+            tileSources: "./mosaic_tiles.dzi", 
+            maxZoomPixelRatio: 5,           
+            animationTime: 0.8,             
+            zoomPerClick: 1.5               
+        });
+
+        const infoPanel = document.getElementById('info-panel');
+        const fileNameDiv = document.getElementById('file-name');
+        const originalImg = document.getElementById('original-img');
+
+        document.getElementById('close-btn').onclick = () => infoPanel.style.display = 'none';
+
+        // ==========================================
+        // 核心封装：呼出展示面板 (供点击和搜索共用)
+        // ==========================================
+        function showImagePanel(found) {
+            const LOAD_BASE_URL = "https://pic.mjbeauty.top/d/agiftformj123/"; 
+            const VIEW_BASE_URL = "https://mjbeauty.top/pic/agiftformj123/";  
+
+            const loadUrl = LOAD_BASE_URL + found.file;
+            const viewUrl = VIEW_BASE_URL + found.file;
+
+            fileNameDiv.innerText = found.file;
+            document.getElementById('view-original-link').href = viewUrl; 
+
+            infoPanel.style.display = 'block';
+            originalImg.style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            originalImg.onload = function() {
+                document.getElementById('loading-spinner').style.display = 'none';
+                originalImg.style.display = 'block';
+            };
+            originalImg.src = loadUrl; 
+        }
+
+        // 3. 处理鼠标/手指点击事件
+        viewer.addHandler('canvas-click', function(event) {
+            if(!event.quick) return;
+
+            const viewportPoint = viewer.viewport.pointFromPixel(event.position);
+            const imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+            
+            const realX = Math.round(imagePoint.x);
+            const realY = Math.round(imagePoint.y);
+
+            const found = tileData.find(t => 
+                realX >= t.x && realX < t.x + t.w && 
+                realY >= t.y && realY < t.y + t.h
+            );
+
+            if(found) showImagePanel(found);
+        });
+
+// ==========================================
+        // 🚀 4. 终极搜索与精准飞行系统
+        // ==========================================
+        
+        // 核心一：精准飞行制导
+        function flyToImage(found) {
+            if(!found) return;
+            
+            // 【极其关键的修复】：用 Number 强转，并使用严格的 OpenSeadragon.Rect 规范
+            // 解决坐标漂移和找不准画面的问题
+            const imageRect = new OpenSeadragon.Rect(
+                Number(found.x), 
+                Number(found.y), 
+                Number(found.w), 
+                Number(found.h)
+            );
+            
+            const viewportRect = viewer.viewport.imageToViewportRectangle(imageRect);
+            
+            // 命令镜头平滑飞过去
+            viewer.viewport.fitBounds(viewportRect, false);
+            
+            // 呼出专属面板
+            showImagePanel(found);
+        }
+
+        // 核心二：输入框实时联想
+        function handleInput() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const resultsBox = document.getElementById('search-results');
+            resultsBox.innerHTML = '';
+
+            if (!query) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            // 模糊搜索，只要包含关键词就列出来。限制最多显示 30 条，防止 DOM 渲染卡顿
+            const matches = tileData.filter(t => t.file.toLowerCase().includes(query)).slice(0, 30);
+
+            if (matches.length === 0) {
+                resultsBox.style.display = 'none';
+                return;
+            }
+
+            // 循环生成选项
+            matches.forEach(match => {
+                const div = document.createElement('div');
+                div.className = 'search-item';
+                div.innerText = match.file;
+                // 点击某一项时，直接飞向该坐标
+                div.onclick = () => {
+                    document.getElementById('search-input').value = match.file;
+                    resultsBox.style.display = 'none';
+                    flyToImage(match);
+                };
+                resultsBox.appendChild(div);
+            });
+
+            resultsBox.style.display = 'flex';
+        }
+
+        // 核心三：点击“定位”按钮的兜底逻辑
+        function doSearch() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!query) return;
+
+            // 优先找完全一致的，如果没有再找包含的第一个
+            const found = tileData.find(t => t.file.toLowerCase() === query) 
+                       || tileData.find(t => t.file.toLowerCase().includes(query));
+
+            if (found) {
+                document.getElementById('search-results').style.display = 'none';
+                flyToImage(found);
+            } else {
+                alert("没有找到包含 [" + query + "] 的照片哦，请检查名字是否输入正确！");
+            }
+        }
+
+        // 核心四：点击空白处自动关闭搜索列表，提升体验
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#search-box')) {
+                const resultsBox = document.getElementById('search-results');
+                if (resultsBox) resultsBox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
